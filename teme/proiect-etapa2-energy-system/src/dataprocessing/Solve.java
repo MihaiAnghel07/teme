@@ -47,7 +47,7 @@ public final class Solve {
                              final ArrayList<DistributorInputData> distributors,
                              final ArrayList<ProducerInputData> producers) {
 
-
+        
         for (DistributorInputData distributor : distributors) {
             distributor.setChooseProductionContract(true);
         }
@@ -75,12 +75,12 @@ public final class Solve {
         updates.updateContractsLength(consumers);
         updates.updateDistributors(distributors, distributorsChanges.get(i));
         updates.updateConsumers(consumers, newConsumers.get(i));
+        formulasCompute.setFormulasResults(distributors, producers);
         income.addMonthlyIncome(consumers);
         contracts.chooseDistributor(consumers, distributors);
         payments.consumerPayments(consumers, distributors);
         payments.distributorPayments(consumers, distributors, producers);
         updates.updateProducers(producers, producersChanges.get(i), distributors);
-        formulasCompute.setFormulasResults(distributors, producers);
         contracts.chooseProducer(distributors, producers);
         updates.updateDistributorsList(distributors, consumers);
         updates.updateMonthlyStats(producers, i + 1);

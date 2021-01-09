@@ -36,9 +36,18 @@ public final class Payments {
                         // he must also pay the remaining month plus the penalty
 
                         int newContractPrice;
-                        newContractPrice = (int) (Math.round(Math.floor(procent * consumer
+                        int flag = 0;
+                        // first case: old distributor == current distributor
+                        if (consumer.getDistributorId() == consumer.getOldDistributorId()) {
+                            newContractPrice = (int) (Math.round(Math.floor(procent * consumer
                                     .getOldContractPrice())) + consumer.getContractPrice());
-
+                        } else {
+                            // second case
+                            newContractPrice = (int) (Math.round(Math.floor(procent * consumer
+                                    .getOldContractPrice())));
+                            consumer.setIndebt(true);
+                            flag = 1;
+                        }
 
                         if (consumer.getInitialBudget() >= newContractPrice) {
                             consumer.setInitialBudget(consumer.getInitialBudget()
@@ -47,8 +56,9 @@ public final class Payments {
                             distributors.get(id).setInitialBudget(distributors.get(id)
                                     .getInitialBudget() + newContractPrice);
 
-
-                            consumer.setIndebt(false);
+                            if (flag == 0) {
+                                consumer.setIndebt(false);
+                            }
                             consumer.setOldContractPrice(consumer.getContractPrice());
                             consumer.setOldDistributorId(consumer.getDistributorId());
                         } else {

@@ -1,5 +1,6 @@
 package strategies;
 
+import dataprocessing.ProductionContracts;
 import fileio.DistributorInputData;
 import fileio.ProducerInputData;
 
@@ -22,14 +23,11 @@ public final class PriceStrategy implements Strategy {
                 .thenComparing(ProducerInputData::getEnergyPerDistributor).reversed()
                 .thenComparing(ProducerInputData::getId));
 
+        ProductionContracts productionContracts = new ProductionContracts();
         int totalEnergy = 0;
         for (ProducerInputData producer : producers) {
-            if (producer.getCurrentNrDistributors() < producer.getMaxDistributors()) {
-                producer.addContract(distributor.getId());
-                producer.setCurrentNrDistributors(producer.getCurrentNrDistributors() + 1);
-                distributor.addContractsToProducers(producer.getId());
-                totalEnergy += producer.getEnergyPerDistributor();
-            }
+            totalEnergy = productionContracts.getEnergyOfSignedContract(distributor,
+                    producer, totalEnergy);
             if (totalEnergy >= distributor.getEnergyNeededKW()) {
                 break;
             }
