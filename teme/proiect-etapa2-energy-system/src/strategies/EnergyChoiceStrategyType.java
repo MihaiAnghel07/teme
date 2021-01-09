@@ -7,11 +7,7 @@ public enum EnergyChoiceStrategyType {
     GREEN("GREEN"),
     PRICE("PRICE"),
     QUANTITY("QUANTITY");
-    private final String label;
-
-    public String getLabel() {
-        return label;
-    }
+    public final String label;
 
     EnergyChoiceStrategyType(String label) {
         this.label = label;
