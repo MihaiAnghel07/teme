@@ -141,9 +141,6 @@ public final class ConsumerInputData {
         return "ConsumerInputData{"
                 + "id = " + id + '\''
                 + ", isBankrupt = " + isBankrupt + '\''
-                //+ ", isIndepted = " + isIndebted + '\''
-                //+ ", contractPrice = " + contractPrice + '\''
-                //+ ", monthlyIncome = " + monthlyIncome + '\''
                 + ", remainedContract = " + remainedContractMonths + '\''
                 + ", initialBudget = " + initialBudget + '}' + '\n';
     }

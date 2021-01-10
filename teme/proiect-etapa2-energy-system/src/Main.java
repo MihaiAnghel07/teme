@@ -1,7 +1,5 @@
 
-import dataprocessing.CheckBankrupt;
 import dataprocessing.Solve;
-import dataprocessing.Updates;
 import fileio.*;
 
 import java.io.File;
@@ -36,24 +34,10 @@ public final class Main {
         List<List<ProducerInputData>> producersChanges = new ArrayList<>(input
                 .getProducerChanges());
 
-
-        CheckBankrupt checkBankrupt = new CheckBankrupt();
-        Updates updates = Updates.getInstance();
+        //start the simulation
         Solve solve = Solve.getInstance();
-
-        // Initial month
-        solve.initialMonth(consumers, distributors, producers);
-
-        // Regular months
-        for (int i = 0; i < nrTurns; i++) {
-            solve.regularMonth(consumers, distributors, producers, newConsumers,
-                    distributorsChanges, producersChanges, i);
-            if (checkBankrupt.checkDistributorsBankrupt(distributors)) {
-                break;
-            }
-        }
-        // I must update contracts length
-        updates.updateContractsLength(consumers);
+        solve.startSimulation(nrTurns, consumers, distributors, producers,
+                newConsumers, distributorsChanges, producersChanges);
 
         // I build the output entities
         Output output = new Output();
